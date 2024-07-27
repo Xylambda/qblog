@@ -1,5 +1,5 @@
 ---
-title: "qblog"
+title: "xy = lambda"
 listing:
   contents: posts
   sort: "date desc"

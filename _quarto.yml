@@ -12,9 +12,6 @@ website:
       - icon: github
         text: Github
         href: https://github.com/Xylambda
-  footer:
-    left: "© 2024 xy = lambda"
-    right: "Built with quarto"
 
 format:
   html:
