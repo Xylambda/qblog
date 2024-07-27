@@ -2,14 +2,20 @@ project:
   type: website
 
 website:
-  title: "qblog"
+  title: "xy = lambda"
   navbar:
     right:
       - about.qmd
+      - icon: linkedin
+        text: LinkedIn
+        href: https://www.linkedin.com/in/alejandro-pérez-sanjuán/
       - icon: github
-        href: https://github.com/
-      - icon: twitter
-        href: https://twitter.com
+        text: Github
+        href: https://github.com/Xylambda
+  footer:
+    left: "© 2024 xy = lambda"
+    right: "Built with quarto"
+
 format:
   html:
     theme: cosmo
