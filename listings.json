@@ -2,9 +2,11 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/28_07_2024_index_tracking_I.html",
+      "/posts/2021_07_29_dollar_index_checkpoint.html",
       "/posts/post-with-code/index.html",
-      "/posts/27_07_2024_torch_vs_numpy.html",
-      "/posts/welcome/index.html"
+      "/posts/welcome/index.html",
+      "/posts/2021_08_15_online_beta_with_kalman_filter_checkpoint.html"
     ]
   }
 ]
