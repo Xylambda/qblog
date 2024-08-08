@@ -244,11 +244,10 @@ window.Quarto = {
 <p><strong>DISCLAIMER: the code to generate the scatter plots was taken from Quantopian Kalman Filter notebook [1]</strong></p>
 </blockquote>
 <section id="introduction" class="level2">
-<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<h2 class="anchored" data-anchor-id="introduction">1. Introduction</h2>
 <p>The Kalman Filter is an optimal estimation algorithm capable of finding the true state of a signal given that this signal is noisy and/or incomplete. There are many applications where the Kalman filter is an appropiate tool; in this post we see how we can mix the Kalman filter with a linear regression to dynamically compute the beta between 2 stocks.</p>
-</section>
-<section id="brief-review" class="level2">
-<h2 class="anchored" data-anchor-id="brief-review">Brief review</h2>
+<section id="kalman-filter-review" class="level3">
+<h3 class="anchored" data-anchor-id="kalman-filter-review">1.1. Kalman filter review</h3>
 <p>The Kalman assumes a dynamic linear system given by two equations <span class="math display">\[
 \begin{matrix}
 x_{k} = A_{k} x_{k} + B u_{k} + q_{k} \\
@@ -274,8 +273,8 @@ P_k = (I - K_k H) P_{k}^{-}
 </ol>
 <p>We won’t cover the mathematical derivation of the filter since it is very complex and it would only add useless noise to the post, but you can read it at [3] and [4].</p>
 </section>
-<section id="linear-regression-kalman-filtering" class="level2">
-<h2 class="anchored" data-anchor-id="linear-regression-kalman-filtering">Linear regression &amp; Kalman filtering</h2>
+<section id="linear-regression-kalman-filtering" class="level3">
+<h3 class="anchored" data-anchor-id="linear-regression-kalman-filtering">1.2. Linear regression &amp; Kalman filtering</h3>
 <p>Recall the typical linear regression equation <span class="math display">\[
 \hat{Y} = \hat{\beta}_{0} + \sum_{j=0}^{p} X_{j} \hat{\beta}_{j}
 \]</span></p>
@@ -291,8 +290,9 @@ z_{k} = (1, H_{k})\begin{pmatrix} x_{k,0} \\ x_{k,1} \end{pmatrix} + r_{k}
 \]</span></p>
 <p>This is telling us that we can plug one stock in the <span class="math inline">\(z_{k}\)</span> and the other in the <span class="math inline">\(H_{k}\)</span> to compute a dynamic beta between both stocks. <span class="math inline">\(x_{k,0}\)</span> would be our alpha and <span class="math inline">\(x_{k,1}\)</span> our beta.</p>
 </section>
-<section id="the-code" class="level2">
-<h2 class="anchored" data-anchor-id="the-code">The code</h2>
+</section>
+<section id="numerical-experiments" class="level2">
+<h2 class="anchored" data-anchor-id="numerical-experiments">2. Numerical experiments</h2>
 <p>We first download the stock prices of <code>Amazon</code> and <code>Microsoft</code> and compute their arithmetic relative returns. We use arithmetic returns because of the difference in scale of absolute returns.</p>
 <div id="26db0449" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">#collapse-hide</span></span>
@@ -382,10 +382,10 @@ z_{k} = (1, H_{k})\begin{pmatrix} x_{k,0} \\ x_{k,1} \end{pmatrix} + r_{k}
 <span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>A <span class="op">=</span> np.array([np.eye(<span class="dv">2</span>)] <span class="op">*</span> n_steps)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Next, the control part. We are not going to use it, so we set everything to zero but taking into account the matrix dimensions we talked about earlier.</p>
+<p>Next, the control part. We are not going to use it, so we set them to None.</p>
 <div id="c3f5e1dc" class="cell" data-execution_count="7">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>B <span class="op">=</span> np.zeros((n_steps, <span class="dv">2</span>, <span class="dv">2</span>)) <span class="co"># model</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>U <span class="op">=</span> np.zeros((n_steps, <span class="dv">2</span>, <span class="dv">1</span>)) <span class="co"># vector</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>B <span class="op">=</span> <span class="va">None</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>U <span class="op">=</span> <span class="va">None</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>We continue the filter design by looking at the initial estimates. The Kalman must start somewhere and we are in charge of defining that place. We assume the initial mean estimates as zero, both for alpha and beta, and the initial covariance estimates as 1, also both for alpha and beta.</p>
 <div id="2b35b516" class="cell" data-execution_count="8">
@@ -441,9 +441,8 @@ z_{k} = (1, H_{k})\begin{pmatrix} x_{k,0} \\ x_{k,1} \end{pmatrix} + r_{k}
 </div>
 </div>
 </div>
-</section>
-<section id="whats-next" class="level2">
-<h2 class="anchored" data-anchor-id="whats-next">What’s next?</h2>
+<section id="whats-next" class="level3">
+<h3 class="anchored" data-anchor-id="whats-next">2.1. What’s next?</h3>
 <p>Now you can use the estimated betas and alphas to perform a linear regression in an online fashion, updating the prior knowledge recursively with the observed variable.</p>
 <div id="a2db386c" class="cell" data-execution_count="14">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co">#collapse-hide</span></span>
@@ -477,8 +476,9 @@ z_{k} = (1, H_{k})\begin{pmatrix} x_{k,0} \\ x_{k,1} \end{pmatrix} + r_{k}
 </div>
 <p>The dynamic beta and alpha provide a linear regression that adapts dynamically each time step. The regression line we created earlier is provided in <strong>red</strong> to compare. This looks much better!</p>
 </section>
+</section>
 <section id="conclusion" class="level2">
-<h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
+<h2 class="anchored" data-anchor-id="conclusion">3. Conclusion</h2>
 <p>In this post we’ve seen how to perform online linear regression using the Kalman filter. The results are more realistic than a simple linear regression since they are computed updating prior distributions with new information.</p>
 <p>One of the main drawbacks of the Kalman filter is that the assumptions of normality and linearity must hold in order for the filter to give us the optimal estimate [3].</p>
 <p>Overall, it is a very powerful and elegant technique that seems to outperform other models, like CAPM.</p>

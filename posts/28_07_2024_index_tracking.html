@@ -221,13 +221,6 @@ window.Quarto = {
 
 
 <p>We review in this post a naive approach to solve the Index Tracking problem using Principal Component Analysis.</p>
-<div id="cell-2" class="cell" data-execution_count="37">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.ticker <span class="im">as</span> mtick</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.decomposition <span class="im">import</span> PCA</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
 <section id="introduction" class="level2">
 <h2 class="anchored" data-anchor-id="introduction">1. Introduction</h2>
 <p>A financial index is a number that represents the aggregate value of a group of items. In particular, a financial index is composed of a collection of assets, such as stocks or bonds (each instrument associated with a weight that determines its importance on the overall basket), which captures the value of a specific market or a segment of it (Benidis, K., Feng, Y., &amp; Palomar, D. P. (2018)).</p>
@@ -245,14 +238,29 @@ r_{tracking}=\sum_{i}^{k} w_{i} \cdot r_{i}.
 <p>Here, <span class="math inline">\(w_{i}\)</span> and <span class="math inline">\(r_{i}\)</span> are the weights and returns of asset <span class="math inline">\(i\)</span> and <span class="math inline">\(k\)</span> is the number of assets in the tracking portfolio.</p>
 </section>
 </section>
-<section id="the-role-of-principal-component-analysis-in-index-tracking" class="level2">
-<h2 class="anchored" data-anchor-id="the-role-of-principal-component-analysis-in-index-tracking">2. The role of Principal Component Analysis in Index Tracking</h2>
+<section id="methodology" class="level2">
+<h2 class="anchored" data-anchor-id="methodology">2. Methodology</h2>
+<section id="principal-component-analysis" class="level3">
+<h3 class="anchored" data-anchor-id="principal-component-analysis">2.1. Principal component Analysis</h3>
 <p>Principal Component Analysis (PCA) is a statistical technique that allows expressing a set of variables as a set of linearly uncorrelated variables called principal components. We are not going to dive into the definition and computations needed to perform PCA. Instead, we are going to focus on using this technique to select a subset of relevant instruments, from the total amount of instruments that compose and index, to construct a tracking portfolio.</p>
 </section>
-<section id="numerical-experiments" class="level2">
-<h2 class="anchored" data-anchor-id="numerical-experiments">3. Numerical Experiments</h2>
+<section id="dataset" class="level3">
+<h3 class="anchored" data-anchor-id="dataset">2.2. Dataset</h3>
+<p>We work in this post with the adjusted close prices of SP500 constituents, downloaded from Yahoo finance on date 2024-05-30. Survivorship bias has not been taken into account and that is why some tickers may be missing. In any case, this is not important for the objective of the post.</p>
+<p>Whenever we work with the dataset, we discard the tickers that have any missing values in the lookback period.</p>
+</section>
+</section>
+<section id="results" class="level2">
+<h2 class="anchored" data-anchor-id="results">3. Results</h2>
 <p>We apply in this section the PCA-based index tracking methodology to the SP500. The idea is to generate a portfolio of size <span class="math inline">\(k\)</span> every month. In actual fact, we are not truly rebalancing because we are not going to take into account the previous portfolio. We are also not going to take into account weight drift (or style drift) since we are not considering neither working with shares nor with a budget.</p>
 <p>The following cells load the SP500 component prices and the index itself. Then, we compute the relative returns.</p>
+<div id="cell-6" class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.ticker <span class="im">as</span> mtick</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.decomposition <span class="im">import</span> PCA</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 <div id="cell-7" class="cell" data-execution_count="15">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>dataset <span class="op">=</span> pd.read_csv(<span class="st">"data/sp500.csv"</span>, index_col<span class="op">=</span><span class="dv">0</span>)</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>dataset.index <span class="op">=</span> pd.DatetimeIndex(dataset.index)</span>
@@ -477,9 +485,9 @@ r_{tracking}=\sum_{i}^{k} w_{i} \cdot r_{i}.
 </div>
 </div>
 </section>
-<section id="why-is-it-called-naive" class="level2">
-<h2 class="anchored" data-anchor-id="why-is-it-called-naive">4. Why is it called “Naive”?</h2>
-<p>The approach we have used is far from desirable. Some reasons why: * PCA does not directly address the minimization of the tracking error. * PCA focuses on explaining the variance of the data, which may not be the best way to capture market movements. * Constraints: we have somewhat included the cardinality constraing on our portfolio construction but it was a far from elegant solution. What if we want to add more constraints? For intance: what if we want a portfolio computed at time <span class="math inline">\(t+1\)</span> to be derived from the portfolio at time <span class="math inline">\(t\)</span>, limiting for example the number of assets that are allowed to change from <span class="math inline">\(t\)</span> to <span class="math inline">\(t+1\)</span>? PCA is not suited for these constraints.</p>
+<section id="why-is-it-naive" class="level2">
+<h2 class="anchored" data-anchor-id="why-is-it-naive">4. Why is it “Naive”?</h2>
+<p>The approach we have used is far from desirable. Some reasons why: 1. PCA does not directly address the minimization of the tracking error. 2. PCA focuses on explaining the variance of the data, which may not be the best way to capture market movements. 3. Constraints: we have somewhat included the cardinality constraing on our portfolio construction but it was a far from elegant solution. What if we want to add more constraints? For intance: what if we want a portfolio computed at time <span class="math inline">\(t+1\)</span> to be derived from the portfolio at time <span class="math inline">\(t\)</span>, limiting for example the number of assets that are allowed to change from <span class="math inline">\(t\)</span> to <span class="math inline">\(t+1\)</span>? PCA is not suited for these constraints.</p>
 </section>
 <section id="conclusions" class="level2">
 <h2 class="anchored" data-anchor-id="conclusions">5. Conclusions</h2>

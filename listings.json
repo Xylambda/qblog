@@ -2,6 +2,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/08_08_2024_ml_notes_1.html",
       "/posts/28_07_2024_index_tracking.html",
       "/posts/2021_08_15_online_beta_with_kalman_filter_checkpoint.html",
       "/posts/2021_07_29_dollar_index_checkpoint.html"
