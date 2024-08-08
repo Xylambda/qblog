@@ -266,7 +266,7 @@ P(C | X = (x_1, x_2, ..., x_n)) = \dfrac{
 \]</span></p>
 <p>A vector of features <span class="math inline">\(X = (x_1, x_2, ..., x_n)\)</span> whose class is unknown will be classified as the class that maximizes the probability <span class="math inline">\(P(C | X = (x_1, x_2, ..., x_n))\)</span> such that</p>
 <p><span class="math display">\[
-C = \underset{C}{\operatorname{argmax}} P(C | X = (x_1, x_2, ..., x_n))
+C = \underset{C}{\operatorname{argmax}} \ P(C | X = (x_1, x_2, ..., x_n))
 \]</span></p>
 </section>
 <section id="optimizing-the-computations-of-terms-and-naive-assumption" class="level3">
@@ -278,11 +278,11 @@ P(C | X = (x_1, x_2, ..., x_n)) \propto P(X = (x_1, x_2, ..., x_n) | C) \cdot P(
 <p>which means we need to compute <span class="math inline">\(P(C)\)</span> and <span class="math inline">\(P(X = (x_1, x_2, ..., x_n))\)</span>.</p>
 <p>To compute <span class="math inline">\(P(C)\)</span> we can simply get the frequency of the class <span class="math inline">\(C\)</span> in the data using the ratio of favorable outcomes of <span class="math inline">\(C\)</span> divided by the total number of outcomes. To compute the <span class="math inline">\(P(C | X =(x_1, x_2, ..., x_n))\)</span> we would need to estimate the joint distribution, which would mean computing <span class="math inline">\(2^n - 1\)</span> (-1 to remove the empty possibility) probabilities for each possible combination of <span class="math inline">\(X=(x_1, x_2, ..., x_n)\)</span>. One approach to simplify this computation is to assume the features are conditionally independent so the complexity becomes linear</p>
 <p><span class="math display">\[
-P(X = (x_1, x_2, ..., x_n) | C) = P(x_1 | C) \cdot P(x_2 | C) \cdot ... \cdot P(x_n | C).
+P(X = (x_1, x_2, ..., x_n) | C) = P(x_1 | C) \cdot P(x_2 | C) \cdot ... \cdot P(x_n | C) = \prod_{i=1}^{n} P(x_i | C).
 \]</span></p>
 <p>So far, we have obtained the following expression to compute the posterior probabilities</p>
 <p><span class="math display">\[
-P(C | X = (x_1, x_2, ..., x_n)) \propto P(x_1 | C) \cdot P(x_2 | C) \cdot ... \cdot P(x_n | C) \cdot P(C).
+P(C | X = (x_1, x_2, ..., x_n)) \propto P(x_1 | C) \cdot P(x_2 | C) \cdot ... \cdot P(x_n | C) \cdot P(C) = P(C) \cdot \prod_{i=1}^{n} P(x_i | C).
 \]</span></p>
 <p>Since probabilities are real numbers between 0 and 1 the product of probabilities may yield zeroed values. We can solve this issue by taking the logarithm to obtain the log-probabilities</p>
 <p><span class="math display">\[
@@ -290,13 +290,13 @@ P(C | X = (x_1, x_2, ..., x_n)) \propto P(x_1 | C) \cdot P(x_2 | C) \cdot ... \c
 \]</span></p>
 <p>One of the important properties of logarithms is <span class="math inline">\(\log(a \cdot b) = \log(a) + \log(b)\)</span>, so</p>
 <p><span class="math display">\[
-\log(P(C | X = (x_1, x_2, ..., x_n))) \propto \log(P(x_1 | C)) + \log(P(x_2 | C)) + ... + \log(P(x_n | C)) + \log(P(C)).
+\log(P(C | X = (x_1, x_2, ..., x_n))) \propto \log(P(x_1 | C)) + \log(P(x_2 | C)) + ... + \log(P(x_n | C)) + \log(P(C)) = \log(P(C)) + \sum_{i=1}^{n} \log(P(x_i | C)).
 \]</span></p>
 <p>A vector of features <span class="math inline">\(X\)</span> will be assigned the class <span class="math inline">\(C\)</span> that maximizes this log-prob:</p>
 <p><span class="math display">\[
-C = \underset{C}{\operatorname{argmax}} \ \log(P(x_1 | C)) + \log(P(x_2 | C)) + ... + \log(P(x_n | C)) + \log(P(C))
+C = \underset{C}{\operatorname{argmax}} \ \log(P(C)) + \sum_{i=1}^{n} \log(P(x_i | C)).
 \]</span></p>
-<p>The very last thing we need is defining <span class="math inline">\(P(x_i | C)\)</span>. Here, we can plug pretty much any probability distribution but for this example we are going to use the Gaussian distribution:</p>
+<p>The very last thing we need is defining <span class="math inline">\(P(x_i | C)\)</span>. Here, we can plug pretty much <a href="https://www.scitepress.org/papers/2015/56428/56428.pdf">any probability distribution</a> but for this example we are going to use the Gaussian distribution:</p>
 <p><span class="math display">\[
 P(x_i | C) = \dfrac{
     1
@@ -429,9 +429,9 @@ P(x_i | C) = \dfrac{
 <h3 class="anchored" data-anchor-id="pros">Pros</h3>
 <ul>
 <li>Very easy to implement and train.</li>
-<li>Linear complexity <span class="math inline">\(O(n)\)</span>, with <span class="math inline">\(n\)</span> being the number of samples.</li>
-<li>Good class estimator</li>
-<li>Works well with small datasets</li>
+<li>Computational complexity of <span class="math inline">\(O(n)\)</span>, with <span class="math inline">\(n\)</span> being the number of samples.</li>
+<li>Good class estimator.</li>
+<li>Works well with small datasets.</li>
 <li>Seems to perfrom well on text classification.</li>
 </ul>
 </section>
