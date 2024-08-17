@@ -487,7 +487,12 @@ r_{tracking}=\sum_{i}^{k} w_{i} \cdot r_{i}.
 </section>
 <section id="why-is-it-naive" class="level2">
 <h2 class="anchored" data-anchor-id="why-is-it-naive">4. Why is it “Naive”?</h2>
-<p>The approach we have used is far from desirable. Some reasons why: 1. PCA does not directly address the minimization of the tracking error. 2. PCA focuses on explaining the variance of the data, which may not be the best way to capture market movements. 3. Constraints: we have somewhat included the cardinality constraing on our portfolio construction but it was a far from elegant solution. What if we want to add more constraints? For intance: what if we want a portfolio computed at time <span class="math inline">\(t+1\)</span> to be derived from the portfolio at time <span class="math inline">\(t\)</span>, limiting for example the number of assets that are allowed to change from <span class="math inline">\(t\)</span> to <span class="math inline">\(t+1\)</span>? PCA is not suited for these constraints.</p>
+<p>The approach we have used is far from desirable. Some reasons why:</p>
+<ol type="1">
+<li>PCA does not directly address the minimization of the tracking error.</li>
+<li>PCA focuses on explaining the variance of the data, which may not be the best way to capture market movements.</li>
+<li>Constraints: we have somewhat included the cardinality constraing on our portfolio construction but it was a far from elegant solution. What if we want to add more constraints? For intance: what if we want a portfolio computed at time <span class="math inline">\(t+1\)</span> to be derived from the portfolio at time <span class="math inline">\(t\)</span>, limiting for example the number of assets that are allowed to change from <span class="math inline">\(t\)</span> to <span class="math inline">\(t+1\)</span>? PCA is not suited for these constraints.</li>
+</ol>
 </section>
 <section id="conclusions" class="level2">
 <h2 class="anchored" data-anchor-id="conclusions">5. Conclusions</h2>

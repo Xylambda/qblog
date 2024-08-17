@@ -284,7 +284,12 @@ L(B) = \dfrac{1}{N} || Y - \hat{Y}||^{2} = \dfrac{1}{N}  \left( Y -  \hat{Y} \ri
 B = B - \eta \dfrac{d L(B)}{d B},
 \]</span></p>
 <p>where <span class="math inline">\(\eta\)</span> is the learning rate, a parameter used to control how small or big the new changes are.</p>
-<p>The above operation is repeated for a fixed number of times called <em>epochs</em>. Each epoch represents a full traverse of the data <span class="math inline">\(X\)</span>. We can traverse the data in 3 ways: * <strong>Batch:</strong> we use all elements of <span class="math inline">\(X\)</span> at once. * <strong>Mini-batch:</strong>: we use a subset <span class="math inline">\(V\)</span> of elements of <span class="math inline">\(X\)</span> such that <span class="math inline">\((1 &lt; n_V &lt; n_X)\)</span>, where <span class="math inline">\(n\)</span> represents the number of rows * <strong>Stochastic:</strong>: we use a subset <span class="math inline">\(V\)</span> of elements of <span class="math inline">\(X\)</span> such that <span class="math inline">\((n_V = 1)\)</span></p>
+<p>The above operation is repeated for a fixed number of times called <em>epochs</em>. Each epoch represents a full traverse of the data <span class="math inline">\(X\)</span>. We can traverse the data in 3 ways:</p>
+<ul>
+<li><strong>Batch:</strong> we use all elements of <span class="math inline">\(X\)</span> at once.</li>
+<li><strong>Mini-batch:</strong>: we use a subset <span class="math inline">\(V\)</span> of elements of <span class="math inline">\(X\)</span> such that <span class="math inline">\((1 &lt; n_V &lt; n_X)\)</span>, where <span class="math inline">\(n\)</span> represents the number of rows</li>
+<li><strong>Stochastic:</strong>: we use a subset <span class="math inline">\(V\)</span> of elements of <span class="math inline">\(X\)</span> such that <span class="math inline">\((n_V = 1)\)</span></li>
+</ul>
 </section>
 </section>
 <section id="code-linear-regression-from-scratch" class="level2">
