@@ -265,7 +265,7 @@ B = (X^T X)^{-1} X^T Y.
 </section>
 <section id="gradient-descent" class="level3">
 <h3 class="anchored" data-anchor-id="gradient-descent">1.1. Gradient descent</h3>
-<p>Another way of findinf the parameters for the linear regression model is to ask the following question “how does the error change when the parameters changes?”. The answer to this question provides a path that we can follow iteratively to reach the minimum error.</p>
+<p>Another way of finding the parameters for the linear regression model is to ask the following question “how does the error change when the parameters changes?”. The answer to this question provides a path that we can follow iteratively to reach the minimum error.</p>
 <p>We quantify the change in the error with respect to the parameters we use the derivative. Let’s say we want to use the mean squared error (MSE) as a loss function <span class="math inline">\(L\)</span> to measure how accurate the estimated predictions <span class="math inline">\(\hat{Y}\)</span> are with respect to the real values <span class="math inline">\(Y\)</span>:</p>
 <p><span class="math display">\[
 L(B) = \dfrac{1}{N} || Y - \hat{Y}||^{2} = \dfrac{1}{N}  \left( Y -  \hat{Y} \right)^{T}\left( Y -  \hat{Y} \right).
@@ -294,7 +294,7 @@ B = B - \eta \dfrac{d L(B)}{d B},
 </section>
 <section id="code-linear-regression-from-scratch" class="level2">
 <h2 class="anchored" data-anchor-id="code-linear-regression-from-scratch">2. Code linear regression from scratch</h2>
-<p>Below we find the code for both approaches: the ordinary least squares and the gradient descent method. The code is a direct translation</p>
+<p>Below we find the code for both approaches: the ordinary least squares and the gradient descent method. The code is a direct translation of the math explained above.</p>
 <div id="cell-7" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> OLSLinearRegression(RegressorMixin):</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Ordinary least squares regression.</span></span>
@@ -331,7 +331,8 @@ B = B - \eta \dfrac{d L(B)}{d B},
 <span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
 <span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> X <span class="op">@</span> coeff</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="cell-8" class="cell" data-execution_count="5">
+<p>The gradient descen optimization uses the mean squared error but it can be changed by deriving the appropiate formulas and changing them in the code.</p>
+<div id="cell-9" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> GDLinearRegression(RegressorMixin):</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Gradient descent linear regression.</span></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -406,7 +407,7 @@ B = B - \eta \dfrac{d L(B)}{d B},
 <section id="ols-example" class="level3">
 <h3 class="anchored" data-anchor-id="ols-example">2.1. OLS example</h3>
 <p>We use the ordinary least squares solution on the following dataset</p>
-<div id="cell-10" class="cell" data-execution_count="6">
+<div id="cell-11" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>X, y <span class="op">=</span> make_regression(n_samples<span class="op">=</span><span class="dv">500</span>, n_features<span class="op">=</span><span class="dv">1</span>, n_informative<span class="op">=</span><span class="dv">1</span>, n_targets<span class="op">=</span><span class="dv">1</span>, noise<span class="op">=</span><span class="dv">10</span>, random_state<span class="op">=</span><span class="dv">0</span>)</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">1</span>, figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">6</span>))</span>
@@ -425,7 +426,7 @@ B = B - \eta \dfrac{d L(B)}{d B},
 </div>
 </div>
 </div>
-<div id="cell-11" class="cell" data-execution_count="7">
+<div id="cell-12" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>kf <span class="op">=</span> KFold(n_splits<span class="op">=</span><span class="dv">5</span>)</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>r2_scores <span class="op">=</span> []</span>
@@ -445,7 +446,7 @@ B = B - \eta \dfrac{d L(B)}{d B},
 <span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>    r2_scores.append(score)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Pretty good results from this naive model on the synthetic dataset</p>
-<div id="cell-13" class="cell" data-execution_count="8">
+<div id="cell-14" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>np.array(r2_scores).mean()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="8">
 <pre><code>0.9534244993205533</code></pre>
@@ -455,7 +456,7 @@ B = B - \eta \dfrac{d L(B)}{d B},
 <section id="gradient-descent-example" class="level3">
 <h3 class="anchored" data-anchor-id="gradient-descent-example">2.2. Gradient descent example</h3>
 <p>We perform the very same thing using the gradient descent solution</p>
-<div id="cell-15" class="cell" data-execution_count="9">
+<div id="cell-16" class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>kf <span class="op">=</span> KFold(n_splits<span class="op">=</span><span class="dv">5</span>)</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>r2_scores <span class="op">=</span> []</span>
@@ -475,14 +476,14 @@ B = B - \eta \dfrac{d L(B)}{d B},
 <span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>    r2_scores.append(score)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>It takes a bit longer due to the iterative nature of the algorithm but we achieve the same results.</p>
-<div id="cell-17" class="cell" data-execution_count="10">
+<div id="cell-18" class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>np.array(r2_scores).mean()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="10">
 <pre><code>0.9534223387121132</code></pre>
 </div>
 </div>
 <p>If we take the last model and plot its loss we observe a clear decrease the more batches we perform:</p>
-<div id="cell-19" class="cell" data-execution_count="43">
+<div id="cell-20" class="cell" data-execution_count="43">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">1</span>, figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">6</span>))</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>ax.plot(model.loss)</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>ax.grid(<span class="va">True</span>, alpha<span class="op">=</span><span class="fl">.3</span>)</span>
