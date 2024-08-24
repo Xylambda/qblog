@@ -294,11 +294,16 @@ m = \dfrac{1 - (-1)}{||w||} = \dfrac{2}{||w||},
 <section id="optimization-problem" class="level4">
 <h4 class="anchored" data-anchor-id="optimization-problem">1.2.1. Optimization problem</h4>
 <p>The hard margin SVM problem can be formulated as an optimization problem:</p>
-<p>$$ _{||w||} \</p>
-<p> x_{i} w + b \ x_{i} w + b $$</p>
+<p><span class="math display">\[
+\text{min}_{||w||} \quad \dfrac{2}{||w||} \\
+\textrm{s.t.} \quad x_{i} \cdot w + b \geq 1 \\
+\qquad x_{i} \cdot w + b \leq -1
+\]</span></p>
 <p>Note that the constraints can be expressed in a single line:</p>
-<p>$$ _{||w||} \</p>
-<p> y_{i} (x_{i} w + b) , $$</p>
+<p><span class="math display">\[
+\min_{||w||} \quad \dfrac{2}{||w||} \\
+\textrm{s.t.} \quad y_{i} (x_{i} \cdot w + b) \geq 1,
+\]</span></p>
 <p>where <span class="math inline">\(y_{i}\)</span> is the corresponding label to the point <span class="math inline">\(x_{i}\)</span>.</p>
 </section>
 </section>
