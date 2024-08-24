@@ -272,7 +272,7 @@ window.Quarto = {
 <p><span class="math display">\[
 x_{i} \cdot w + b = 0 \ \text{for some data point $i$},
 \]</span></p>
-<p>where <span class="math inline">\(x_{i} \in \R^{1,p}\)</span> is the <span class="math inline">\(i\)</span>-th row of a matrix of features <span class="math inline">\(X \in \R^{n,p}\)</span> and represents a single data point. <span class="math inline">\(n\)</span> and <span class="math inline">\(p\)</span> are the number of samples and features respectively. The parameter <span class="math inline">\(b\in \R^{1}\)</span> is the intercept, which is convenient to separate from the column-vector of coefficients <span class="math inline">\(w \in \R^{p,1}\)</span>.</p>
+<p>where <span class="math inline">\(x_{i} \in \mathbb{R}^{1,p}\)</span> is the <span class="math inline">\(i\)</span>-th row of a matrix of features <span class="math inline">\(X \in \mathbb{R}^{n,p}\)</span> and represents a single data point. <span class="math inline">\(n\)</span> and <span class="math inline">\(p\)</span> are the number of samples and features respectively. The parameter <span class="math inline">\(b\in \mathbb{R}^{1}\)</span> is the intercept, which is convenient to separate from the column-vector of coefficients <span class="math inline">\(w \in \mathbb{R}^{p,1}\)</span>.</p>
 <p><strong>DISCLAIMER:</strong> the notation is used somewhat loosely during this post.</p>
 </section>
 <section id="hard-margin-svm" class="level3">
@@ -417,7 +417,7 @@ J(w,b) = ||w||^2 + C \cdot \dfrac{1}{n} \sum_{i=0}^{n}1 - y_{i}(x_{i} \cdot w + 
 <span id="cb3-56"><a href="#cb3-56" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> y_pred</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div id="cell-11" class="cell" data-execution_count="4">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>X, y <span class="op">=</span> make_blobs(n_samples<span class="op">=</span><span class="dv">500</span>, n_features<span class="op">=</span><span class="dv">2</span>, centers<span class="op">=</span><span class="dv">2</span>, random_state<span class="op">=</span><span class="dv">10</span>, cluster_std<span class="op">=</span><span class="dv">3</span>)</span>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>X, y <span class="op">=</span> make_blobs(n_samples<span class="op">=</span><span class="dv">500</span>, n_features<span class="op">=</span><span class="dv">2</span>, centers<span class="op">=</span><span class="dv">2</span>, random_state<span class="op">=</span><span class="dv">10</span>, cluster_std<span class="op">=</span><span class="dv">4</span>)</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">1</span>, figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">6</span>))</span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
@@ -457,11 +457,11 @@ J(w,b) = ||w||^2 + C \cdot \dfrac{1}{n} \sum_{i=0}^{n}1 - y_{i}(x_{i} \cdot w + 
 <span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>    score <span class="op">=</span> roc_auc_score(y_true<span class="op">=</span>y_test, y_score<span class="op">=</span>y_pred)</span>
 <span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>    roc_scores.append(score)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>An average of 0.96 on classification tasks for this particular dataset.</p>
-<div id="cell-14" class="cell" data-execution_count="7">
+<p>An average of 0.94 on classification tasks for this particular dataset.</p>
+<div id="cell-14" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>np.mean(roc_scores)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="7">
-<pre><code>0.9682883377958618</code></pre>
+<div class="cell-output cell-output-display" data-execution_count="6">
+<pre><code>0.941089620821495</code></pre>
 </div>
 </div>
 </section>
