@@ -245,9 +245,9 @@ window.Quarto = {
 <span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>        x2 <span class="op">=</span> <span class="op">-</span>(w[<span class="dv">0</span>] <span class="op">*</span> x1 <span class="op">+</span> b <span class="op">+</span> offset) <span class="op">/</span> w[<span class="dv">1</span>]</span>
 <span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> i <span class="op">==</span> <span class="dv">0</span>:</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>            ax.plot(x1, x2, label<span class="op">=</span><span class="ss">f'$w \cdot x + b = </span><span class="sc">{</span>offset<span class="sc">}</span><span class="ss">$'</span>, color<span class="op">=</span><span class="st">'blue'</span>, linestyle<span class="op">=</span><span class="st">"--"</span>)</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>            ax.plot(x1, x2, label<span class="op">=</span><span class="ss">f'$x \cdot w + b = </span><span class="sc">{</span>offset<span class="sc">}</span><span class="ss">$'</span>, color<span class="op">=</span><span class="st">'blue'</span>, linestyle<span class="op">=</span><span class="st">"--"</span>)</span>
 <span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>            ax.plot(x1, x2, label<span class="op">=</span><span class="ss">f'$w \cdot x + b = </span><span class="sc">{</span>offset<span class="sc">}</span><span class="ss">$'</span>, color<span class="op">=</span><span class="st">'red'</span>)</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>            ax.plot(x1, x2, label<span class="op">=</span><span class="ss">f'$x \cdot w + b = </span><span class="sc">{</span>offset<span class="sc">}</span><span class="ss">$'</span>, color<span class="op">=</span><span class="st">'red'</span>)</span>
 <span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>    </span>
 <span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>    ax.grid(<span class="va">True</span>, alpha<span class="op">=</span><span class="fl">.3</span>)</span>
 <span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>    ax.set_xlabel(<span class="vs">r'$x_1$'</span>, fontsize<span class="op">=</span><span class="dv">20</span>)</span>
@@ -279,8 +279,10 @@ x_{i} \cdot w + b = 0 \ \text{for some data point $i$},
 <h3 class="anchored" data-anchor-id="hard-margin-svm">1.2. Hard margin SVM</h3>
 <p>When the data is linearly separable we can construct a margin defined by 2 hyperplanes that maximizes the distance between the 2 sets of data. In fact, SVM are sometimes called <em>maximum margin separating hyperplane</em>. These 2 hyperplanes are defined by the following equations:</p>
 <p><span class="math display">\[
-x_{i} \cdot w + b = 1; \ \text{every point in or above this line is classified as 1}, \\
-x_{i} \cdot w + b = -1; \ \text{every point in or below this line is classified as -1},
+\begin{aligned}
+x_{i} \cdot w + b = 1 &amp;\quad \text{every point in or above this line is classified as 1}, \\
+x_{i} \cdot w + b = -1 &amp;\quad \text{every point in or below this line is classified as -1}.
+\end{aligned}
 \]</span></p>
 <p>Now, the distance between the parallel lines <span class="math inline">\(ax + by + c_1 = 0\)</span> and <span class="math inline">\(ax + by + c_2 = 0\)</span> (hyperplanes in 2D) <a href="https://www.cuemath.com/geometry/distance-between-two-lines/">is defined as</a></p>
 <p><span class="math display">\[
@@ -290,26 +292,30 @@ d = \dfrac{|c_2 - c_1|}{\sqrt{a^2 + b^2}}.
 <p><span class="math display">\[
 m = \dfrac{1 - (-1)}{||w||} = \dfrac{2}{||w||},
 \]</span></p>
-<p>which is precisely the magnitude we want to maximize. Note that this equivalent to minimizing <span class="math inline">\(||w||\)</span>.</p>
+<p>which is precisely the magnitude we want to maximize. Note that this is equivalent to minimizing <span class="math inline">\(||w||\)</span>.</p>
 <section id="optimization-problem" class="level4">
 <h4 class="anchored" data-anchor-id="optimization-problem">1.2.1. Optimization problem</h4>
 <p>The hard margin SVM problem can be formulated as an optimization problem:</p>
 <p><span class="math display">\[
-\text{min}_{||w||} \quad \dfrac{2}{||w||} \\
-\textrm{s.t.} \quad x_{i} \cdot w + b \geq 1 \\
-\qquad x_{i} \cdot w + b \leq -1
+\begin{aligned}
+\operatorname{min}_{||w||} &amp;\quad \dfrac{2}{||w||} \\
+\textrm{s.t.} \quad &amp;x_{i} \cdot w + b \geq 1 \\
+&amp;x_{i} \cdot w + b \leq -1
+\end{aligned}
 \]</span></p>
 <p>Note that the constraints can be expressed in a single line:</p>
 <p><span class="math display">\[
-\min_{||w||} \quad \dfrac{2}{||w||} \\
-\textrm{s.t.} \quad y_{i} (x_{i} \cdot w + b) \geq 1,
+\begin{aligned}
+\operatorname{min}_{||w||} &amp;\quad \dfrac{2}{||w||} \\
+\textrm{s.t.} \quad &amp;y_{i} (x_{i} \cdot w + b) \geq 1,
+\end{aligned}
 \]</span></p>
 <p>where <span class="math inline">\(y_{i}\)</span> is the corresponding label to the point <span class="math inline">\(x_{i}\)</span>.</p>
 </section>
 </section>
 <section id="soft-margin-svm" class="level3">
 <h3 class="anchored" data-anchor-id="soft-margin-svm">1.3. Soft margin SVM</h3>
-<p>The hard margin SVM does not allow any points inside the margin, so if the data is not linearly separable the constrains cannot be met and thus, a solution does not exist. A way to solve this issue is by allowing points inside the margin but for every point that is either on the wrong side of the hyperplane or inside the margin we add a penalty to the loss function. The penaly is proportional to the distance between the point and the hyperplane that this point belongs to.</p>
+<p>The hard margin SVM does not allow any points inside the margin, so if the data is not linearly separable the constraints cannot be met and thus, a solution does not exist. A way to solve this issue is by allowing points inside the margin, but for every point that is either on the wrong side of the hyperplane or inside the margin we add a penalty to the loss function. The penaly is proportional to the distance between the point and the hyperplane that this point belongs to.</p>
 <p>The Hinge loss function encapsulates this way of penalizing points at wrong locations:</p>
 <p><span class="math display">\[
 \max (0, 1 - y_{i}(x_{i} \cdot w + b)).
@@ -318,7 +324,7 @@ m = \dfrac{1 - (-1)}{||w||} = \dfrac{2}{||w||},
 <p><span class="math display">\[
 J(w,b) = ||w|| + C \cdot \dfrac{1}{n} \sum_{i=0}^{n} \max (0, 1 - y_{i}(x_{i} \cdot w + b)).
 \]</span></p>
-<p><span class="math inline">\(C\)</span> is a regularization parameter that controls the trade-off between maximizing the margin and minimizing the classification error. Large values of <span class="math inline">\(C\)</span> will generate closer a behaviour to the one performed by a hard margin SVM. One last trick: we can square the norm of <span class="math inline">\(w\)</span> to make the function convex and ease the optimization</p>
+<p><span class="math inline">\(C\)</span> is a regularization parameter that controls the trade-off between maximizing the margin and minimizing the classification error. Large values of <span class="math inline">\(C\)</span> will generate a closer behaviour to the one performed by a hard margin SVM. One last trick: we can square the norm of <span class="math inline">\(w\)</span> to make the function convex and ease the optimization</p>
 <p><span class="math display">\[
 J(w, b) = ||w||^2 + C \cdot \dfrac{1}{n} \sum_{i=0}^{n} \max (0, 1 - y_{i}(x_{i} \cdot w + b)).
 \]</span></p>
@@ -363,63 +369,47 @@ J(w,b) = ||w||^2 + C \cdot \dfrac{1}{n} \sum_{i=0}^{n}1 - y_{i}(x_{i} \cdot w + 
 </section>
 <section id="coding-a-svm-from-scratch" class="level2">
 <h2 class="anchored" data-anchor-id="coding-a-svm-from-scratch">2. Coding a SVM from scratch</h2>
-<div id="cell-10" class="cell" data-execution_count="3">
+<div id="cell-10" class="cell" data-execution_count="80">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> SoftSVMClassifier(ClassifierMixin):</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>,</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>        l_rate<span class="op">=</span><span class="fl">1e-3</span>,</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>        batch_size<span class="op">=</span><span class="dv">32</span>,</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>        n_epochs<span class="op">=</span><span class="dv">1_000</span>,</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>        C<span class="op">=</span><span class="fl">0.01</span>,</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    ):</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.l_rate <span class="op">=</span> l_rate</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.batch_size <span class="op">=</span> batch_size</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.n_epochs <span class="op">=</span> n_epochs</span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.C <span class="op">=</span> C</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, n_epochs<span class="op">=</span><span class="dv">1_000</span>, C<span class="op">=</span><span class="dv">1</span>, l_rate<span class="op">=</span><span class="fl">1e-3</span>):</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.l_rate <span class="op">=</span> l_rate</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.C <span class="op">=</span> C</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.n_epochs <span class="op">=</span> n_epochs</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>        <span class="co"># hyperplane parameters</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.w_coeff_ <span class="op">=</span> <span class="va">None</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.b_coeff_ <span class="op">=</span> <span class="va">None</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> fit(<span class="va">self</span>, X, y):</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>        n_samples, n_features <span class="op">=</span> X.shape</span>
 <span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>        <span class="co"># attributes</span></span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.w_coeff_ <span class="op">=</span> <span class="va">None</span></span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.b_coeff_ <span class="op">=</span> <span class="va">None</span></span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.loss <span class="op">=</span> []</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>        _y <span class="op">=</span> np.where(y <span class="op">&lt;=</span> <span class="dv">0</span>, <span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>)</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>        l_rate <span class="op">=</span> <span class="va">self</span>.l_rate</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>        C <span class="op">=</span> <span class="va">self</span>.C</span>
 <span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> fit(<span class="va">self</span>, X, y):</span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>        _y <span class="op">=</span> np.where(y <span class="op">&lt;=</span> <span class="dv">0</span>, <span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>)</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>        w_coeff <span class="op">=</span> np.zeros(n_features)</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>        b_coeff <span class="op">=</span> <span class="dv">0</span></span>
 <span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>        n_samples, n_features <span class="op">=</span> X.shape</span>
-<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>        w_coeff <span class="op">=</span> np.zeros(n_features)</span>
-<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>        b_coeff <span class="op">=</span> <span class="dv">0</span></span>
-<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>        C <span class="op">=</span> <span class="va">self</span>.C</span>
-<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(<span class="va">self</span>.n_epochs):</span>
-<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">0</span>, n_samples, <span class="va">self</span>.batch_size):</span>
-<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>                X_batch <span class="op">=</span> X[i:i <span class="op">+</span> <span class="va">self</span>.batch_size]</span>
-<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>                y_batch <span class="op">=</span> _y[i:i <span class="op">+</span> <span class="va">self</span>.batch_size]</span>
-<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>                <span class="co"># Gradient initialization</span></span>
-<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>                dJ_dW <span class="op">=</span> np.zeros_like(w_coeff)</span>
-<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>                dJ_db <span class="op">=</span> <span class="dv">0</span></span>
-<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a>                <span class="cf">for</span> x_i, y_i <span class="kw">in</span> <span class="bu">zip</span>(X_batch, y_batch):</span>
-<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a>                    hinge <span class="op">=</span> y_i <span class="op">*</span> (x_i <span class="op">@</span> w_coeff <span class="op">+</span> b_coeff)</span>
-<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a>                    <span class="cf">if</span> hinge <span class="op">&gt;=</span> <span class="dv">1</span>:</span>
-<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a>                        dJ_dW <span class="op">+=</span> <span class="dv">2</span> <span class="op">*</span> w_coeff</span>
-<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a>                        dJ_db <span class="op">+=</span> <span class="dv">0</span></span>
-<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a>                    <span class="cf">else</span>:</span>
-<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a>                        dJ_dW <span class="op">+=</span> <span class="dv">2</span> <span class="op">*</span> w_coeff <span class="op">+</span> C <span class="op">*</span> (<span class="op">-</span>y_i <span class="op">*</span> x_i)</span>
-<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a>                        dJ_db <span class="op">+=</span> C <span class="op">*</span> (<span class="op">-</span>y_i)</span>
-<span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-45"><a href="#cb3-45" aria-hidden="true" tabindex="-1"></a>                w_coeff <span class="op">-=</span> <span class="va">self</span>.l_rate <span class="op">*</span> dJ_dW <span class="op">/</span> <span class="va">self</span>.batch_size</span>
-<span id="cb3-46"><a href="#cb3-46" aria-hidden="true" tabindex="-1"></a>                b_coeff <span class="op">-=</span> <span class="va">self</span>.l_rate <span class="op">*</span> dJ_db <span class="op">/</span> <span class="va">self</span>.batch_size</span>
-<span id="cb3-47"><a href="#cb3-47" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-48"><a href="#cb3-48" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.w_coeff_ <span class="op">=</span> w_coeff</span>
-<span id="cb3-49"><a href="#cb3-49" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.b_coeff_ <span class="op">=</span> b_coeff</span>
-<span id="cb3-50"><a href="#cb3-50" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-51"><a href="#cb3-51" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> predict(<span class="va">self</span>, X):</span>
-<span id="cb3-52"><a href="#cb3-52" aria-hidden="true" tabindex="-1"></a>        w_coeff <span class="op">=</span> <span class="va">self</span>.w_coeff_</span>
-<span id="cb3-53"><a href="#cb3-53" aria-hidden="true" tabindex="-1"></a>        b_coeff <span class="op">=</span> <span class="va">self</span>.b_coeff_</span>
-<span id="cb3-54"><a href="#cb3-54" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-55"><a href="#cb3-55" aria-hidden="true" tabindex="-1"></a>        y_pred <span class="op">=</span> np.sign(X <span class="op">@</span> w_coeff <span class="op">+</span> b_coeff)</span>
-<span id="cb3-56"><a href="#cb3-56" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> y_pred</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(<span class="va">self</span>.n_epochs):</span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> x_i, y_i <span class="kw">in</span> <span class="bu">zip</span>(X, _y):</span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>                hinge_loss <span class="op">=</span> y_i <span class="op">*</span> (x_i <span class="op">@</span> w_coeff <span class="op">+</span> b_coeff)</span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>                <span class="cf">if</span> hinge_loss <span class="op">&gt;=</span> <span class="dv">1</span>:</span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>                    dJ_dw <span class="op">=</span> <span class="dv">2</span> <span class="op">*</span> w_coeff</span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>                    dj_db <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>                <span class="cf">else</span>:</span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>                    dJ_dw <span class="op">=</span> <span class="dv">2</span> <span class="op">*</span> w_coeff <span class="op">-</span> C <span class="op">*</span> np.dot(x_i, y_i)</span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>                    dj_db <span class="op">=</span> <span class="op">-</span>y_i <span class="op">*</span> C</span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>                </span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>                w_coeff <span class="op">-=</span> l_rate <span class="op">*</span> dJ_dw</span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>                b_coeff <span class="op">-=</span> l_rate <span class="op">*</span> dj_db</span>
+<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.w_coeff_ <span class="op">=</span> w_coeff</span>
+<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.b_coeff_ <span class="op">=</span> b_coeff</span>
+<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> predict(<span class="va">self</span>, X):</span>
+<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> np.sign(X <span class="op">@</span> <span class="va">self</span>.w_coeff_ <span class="op">+</span> <span class="va">self</span>.b_coeff_)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div id="cell-11" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>X, y <span class="op">=</span> make_blobs(n_samples<span class="op">=</span><span class="dv">500</span>, n_features<span class="op">=</span><span class="dv">2</span>, centers<span class="op">=</span><span class="dv">2</span>, random_state<span class="op">=</span><span class="dv">10</span>, cluster_std<span class="op">=</span><span class="dv">4</span>)</span>
@@ -440,12 +430,12 @@ J(w,b) = ||w||^2 + C \cdot \dfrac{1}{n} \sum_{i=0}^{n}1 - y_{i}(x_{i} \cdot w + 
 </div>
 </div>
 </div>
-<div id="cell-12" class="cell" data-execution_count="5">
+<div id="cell-12" class="cell" data-execution_count="81">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>kf <span class="op">=</span> KFold(n_splits<span class="op">=</span><span class="dv">5</span>)</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>roc_scores <span class="op">=</span> []</span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> train_idx, test_idx <span class="kw">in</span> kf.split(X):</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    model <span class="op">=</span> SoftSVMClassifier(n_epochs<span class="op">=</span><span class="dv">5_000</span>, batch_size<span class="op">=</span><span class="dv">32</span>)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    model <span class="op">=</span> SoftSVMClassifier(C<span class="op">=</span><span class="dv">1</span>)</span>
 <span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    X_train <span class="op">=</span> X[train_idx]</span>
 <span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    y_train <span class="op">=</span> y[train_idx]</span>
@@ -456,17 +446,58 @@ J(w,b) = ||w||^2 + C \cdot \dfrac{1}{n} \sum_{i=0}^{n}1 - y_{i}(x_{i} \cdot w + 
 <span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>    model.fit(X_train, y_train)</span>
 <span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>    y_pred <span class="op">=</span> model.predict(X_test)</span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>    y_pred <span class="op">=</span> np.where(y_pred <span class="op">&lt;=</span> <span class="dv">0</span>, <span class="dv">0</span>, y_pred)</span>
-<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>    score <span class="op">=</span> roc_auc_score(y_true<span class="op">=</span>y_test, y_score<span class="op">=</span>y_pred)</span>
-<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>    roc_scores.append(score)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>    y_pred <span class="op">=</span> np.where(y_pred <span class="op">&lt;=</span> <span class="dv">0</span>, <span class="dv">0</span>, y_pred)</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>    score <span class="op">=</span> roc_auc_score(y_true<span class="op">=</span>y_test, y_score<span class="op">=</span>y_pred)</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>    roc_scores.append(score)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>An average of 0.94 on classification tasks for this particular dataset.</p>
-<div id="cell-14" class="cell" data-execution_count="6">
+<div id="cell-14" class="cell" data-execution_count="86">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>np.mean(roc_scores)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="6">
-<pre><code>0.941089620821495</code></pre>
+<div class="cell-output cell-output-display" data-execution_count="86">
+<pre><code>0.9777349997637123</code></pre>
+</div>
+</div>
+<div id="cell-15" class="cell" data-execution_count="99">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> plot_hyperplane(w_coeff, b_coeff, X, y):</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">1</span>, figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">6</span>))</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Scatter plot of the data points</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    ax.scatter(X[:, <span class="dv">0</span>], X[:, <span class="dv">1</span>], c<span class="op">=</span>y, cmap<span class="op">=</span><span class="st">'bwr'</span>, edgecolors<span class="op">=</span><span class="st">'k'</span>)</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Calculate the decision boundary (w_coeff[0] * x1 + w_coeff[1] * x2 + b_coeff = 0)</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>    x_min, x_max <span class="op">=</span> X[:, <span class="dv">0</span>].<span class="bu">min</span>() <span class="op">-</span> <span class="dv">1</span>, X[:, <span class="dv">0</span>].<span class="bu">max</span>() <span class="op">+</span> <span class="dv">1</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>    y_min, y_max <span class="op">=</span> (<span class="op">-</span>(w_coeff[<span class="dv">0</span>] <span class="op">*</span> x_min <span class="op">+</span> b_coeff)) <span class="op">/</span> w_coeff[<span class="dv">1</span>], (<span class="op">-</span>(w_coeff[<span class="dv">0</span>] <span class="op">*</span> x_max <span class="op">+</span> b_coeff)) <span class="op">/</span> w_coeff[<span class="dv">1</span>]</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Plot decision boundary</span></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>    ax.plot([x_min, x_max], [y_min, y_max], <span class="st">'k-'</span>)</span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Plot margins (w_coeff[0] * x1 + w_coeff[1] * x2 + b_coeff = ±1)</span></span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>    margin <span class="op">=</span> <span class="dv">1</span> <span class="op">/</span> np.sqrt(np.<span class="bu">sum</span>(w_coeff <span class="op">**</span> <span class="dv">2</span>))</span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>    ax.plot([x_min, x_max], [y_min <span class="op">-</span> margin, y_max <span class="op">-</span> margin], <span class="st">'k--'</span>)</span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>    ax.plot([x_min, x_max], [y_min <span class="op">+</span> margin, y_max <span class="op">+</span> margin], <span class="st">'k--'</span>)</span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Set plot limits</span></span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>    ax.set_xlim(x_min, x_max)</span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>    ax.set_ylim(X[:, <span class="dv">1</span>].<span class="bu">min</span>() <span class="op">-</span> <span class="dv">1</span>, X[:, <span class="dv">1</span>].<span class="bu">max</span>() <span class="op">+</span> <span class="dv">1</span>)</span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>    ax.set_title(<span class="st">"Optimal hyperplane"</span>, fontsize<span class="op">=</span><span class="dv">23</span>)</span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a>    ax.set_xlabel(<span class="st">"Feature $x_</span><span class="sc">{1}</span><span class="st">$"</span>, fontsize<span class="op">=</span><span class="dv">20</span>)</span>
+<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a>    ax.set_ylabel(<span class="st">"Feature $x_</span><span class="sc">{2}</span><span class="st">$"</span>, fontsize<span class="op">=</span><span class="dv">20</span>)</span>
+<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a>    ax.grid(<span class="va">True</span>, alpha<span class="op">=</span><span class="fl">.3</span>)</span>
+<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a>    ax.tick_params(labelsize<span class="op">=</span><span class="dv">20</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>We plot below the hyperplane of the last K-fold as an example.</p>
+<div id="cell-17" class="cell" data-execution_count="100">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>plot_hyperplane(w_coeff<span class="op">=</span>model.w_coeff_, b_coeff<span class="op">=</span>model.b_coeff_, X<span class="op">=</span>X_train, y<span class="op">=</span>y_train)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="24_08_2024_ml_notes_5_files/figure-html/cell-9-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
 </div>
 </div>
 </section>

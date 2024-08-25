@@ -265,8 +265,8 @@ B = (X^T X)^{-1} X^T Y.
 </section>
 <section id="gradient-descent" class="level3">
 <h3 class="anchored" data-anchor-id="gradient-descent">1.1. Gradient descent</h3>
-<p>Another way of finding the parameters for the linear regression model is to ask the following question “how does the error change when the parameters changes?”. The answer to this question provides a path that we can follow iteratively to reach the minimum error.</p>
-<p>We quantify the change in the error with respect to the parameters we use the derivative. Let’s say we want to use the mean squared error (MSE) as a loss function <span class="math inline">\(L\)</span> to measure how accurate the estimated predictions <span class="math inline">\(\hat{Y}\)</span> are with respect to the real values <span class="math inline">\(Y\)</span>:</p>
+<p>Gradient descent helps minimize some error metric between the predictions and the real <span class="math inline">\(Y\)</span> by adjusting the parameters <span class="math inline">\(B\)</span> itertively. For each parameter, we calculate the gradient, which tells us how the error changes with respect to the parameter. Then, we update the parameters by moving in the direction opposite to the gradient:</p>
+<p>Let’s say we want to use the mean squared error (MSE) as a loss function <span class="math inline">\(L\)</span> to measure how accurate the estimated predictions <span class="math inline">\(\hat{Y}\)</span> are with respect to the real values <span class="math inline">\(Y\)</span>:</p>
 <p><span class="math display">\[
 L(B) = \dfrac{1}{N} || Y - \hat{Y}||^{2} = \dfrac{1}{N}  \left( Y -  \hat{Y} \right)^{T}\left( Y -  \hat{Y} \right).
 \]</span></p>
@@ -475,7 +475,7 @@ B = B - \eta \dfrac{d L(B)}{d B},
 <span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>    score <span class="op">=</span> r2_score(y_true<span class="op">=</span>y_test, y_pred<span class="op">=</span>y_pred)</span>
 <span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>    r2_scores.append(score)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>It takes a bit longer due to the iterative nature of the algorithm but we achieve the same results.</p>
+<p>We achieve the same results.</p>
 <div id="cell-18" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>np.array(r2_scores).mean()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="8">
