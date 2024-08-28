@@ -268,7 +268,7 @@ B = (X^T X)^{-1} X^T Y.
 <p>Gradient descent helps minimize some error metric between the predictions and the real <span class="math inline">\(Y\)</span> by adjusting the parameters <span class="math inline">\(B\)</span> itertively. For each parameter, we calculate the gradient, which tells us how the error changes with respect to the parameter. Then, we update the parameters by moving in the direction opposite to the gradient:</p>
 <p>Let’s say we want to use the mean squared error (MSE) as a loss function <span class="math inline">\(L\)</span> to measure how accurate the estimated predictions <span class="math inline">\(\hat{Y}\)</span> are with respect to the real values <span class="math inline">\(Y\)</span>:</p>
 <p><span class="math display">\[
-L(B) = \dfrac{1}{N} || Y - \hat{Y}||^{2} = \dfrac{1}{N}  \left( Y -  \hat{Y} \right)^{T}\left( Y -  \hat{Y} \right).
+L(B) = \dfrac{1}{N}  \left( Y -  \hat{Y} \right)^{T}\left( Y -  \hat{Y} \right).
 \]</span></p>
 <p>Here, the MSE is the norm 2 of the differences between the estimated values and the real values.</p>
 <p>We now take the derivative of the loss function with respect to <span class="math inline">\(B\)</span>. Refer to the previous section for a more complete proof.</p>
@@ -287,8 +287,8 @@ B = B - \eta \dfrac{d L(B)}{d B},
 <p>The above operation is repeated for a fixed number of times called <em>epochs</em>. Each epoch represents a full traverse of the data <span class="math inline">\(X\)</span>. We can traverse the data in 3 ways:</p>
 <ul>
 <li><strong>Batch:</strong> we use all elements of <span class="math inline">\(X\)</span> at once.</li>
-<li><strong>Mini-batch:</strong>: we use a subset <span class="math inline">\(V\)</span> of elements of <span class="math inline">\(X\)</span> such that <span class="math inline">\((1 &lt; n_V &lt; n_X)\)</span>, where <span class="math inline">\(n\)</span> represents the number of rows</li>
-<li><strong>Stochastic:</strong>: we use a subset <span class="math inline">\(V\)</span> of elements of <span class="math inline">\(X\)</span> such that <span class="math inline">\((n_V = 1)\)</span></li>
+<li><strong>Mini-batch:</strong> we use a subset <span class="math inline">\(V\)</span> of elements of <span class="math inline">\(X\)</span> such that <span class="math inline">\((1 &lt; n_V &lt; n_X)\)</span>, where <span class="math inline">\(n\)</span> represents the number of rows</li>
+<li><strong>Stochastic:</strong> we use a subset <span class="math inline">\(V\)</span> of elements of <span class="math inline">\(X\)</span> such that <span class="math inline">\((n_V = 1)\)</span></li>
 </ul>
 </section>
 </section>

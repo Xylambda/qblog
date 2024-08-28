@@ -2,14 +2,15 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/26_08_2024_ml_notes_8.html",
       "/posts/24_08_2024_ml_notes_5.html",
       "/posts/20_08_2024_ml_notes_4.html",
       "/posts/17_08_2024_ml_notes_3.html",
       "/posts/09_08_2024_ml_notes_2.html",
       "/posts/08_08_2024_ml_notes_1.html",
       "/posts/28_07_2024_index_tracking.html",
-      "/posts/2021_08_15_online_beta_with_kalman_filter_checkpoint.html",
-      "/posts/2021_07_29_dollar_index_checkpoint.html"
+      "/posts/2021_08_15_online_beta_with_kalman_filter.html",
+      "/posts/2021_07_29_dollar_index.html"
     ]
   }
 ]
