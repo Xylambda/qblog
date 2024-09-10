@@ -240,7 +240,7 @@ window.Quarto = {
 <p>We describe in this section the LLoyd’s algorithm to perform <span class="math inline">\(K\)</span>-means. The algorithm partitions <span class="math inline">\(n\)</span> data points into <span class="math inline">\(K\)</span> clusters, where each data point belongs to the cluster with the nearest mean. The algorithm iteratively updates the cluster centroids by calculating the mean of all data points in the cluster and reassigning the points based on these new centroids. The process continues until convergence, where the centroids no longer change significantly.</p>
 <p>Formally, K-means aims to minimize the within-cluster sum of squares (WCSS)</p>
 <p><span class="math display">\[
-\operatorname{argmin}_{S} \text{WSCC} = \operatorname{argmin}_{S} \sum_{i=1}^{k} \sum_{x \in S_{i}} || x - \mu_{i} ||^{2},
+\operatorname{argmin}_{S} \text{WCSS} = \operatorname{argmin}_{S} \sum_{i=1}^{k} \sum_{x \in S_{i}} || x - \mu_{i} ||^{2},
 \]</span></p>
 <p>where <span class="math inline">\(S=\{ S_1, S_2, ..., S_k \}\)</span> is the collection of sets into which we divide the set of observations <span class="math inline">\(x=(x_1, x_2, ..., x_n)\)</span>, <span class="math inline">\(k\)</span> is the number of clusters and <span class="math inline">\(\mu_i\)</span> is the mean of <span class="math inline">\(S_{i}\)</span>, also called centroid,</p>
 <p><span class="math display">\[
@@ -500,7 +500,6 @@ SC' = \text{max}_{k} \dfrac{1}{N} \sum_{i} s'(i).
 </div>
 <p>We are going to cheat since we know beforehand the number of correct clusters. You would notice though that there is a label flip at the end of the cell (<code>if score &lt; 0.5 ...</code>). The KMeans algorithm assigns labels based on the order of the centroids, which are initialized randomly. As a result, the cluster labeled as 0 in one run might be labeled as 1 in another run, depending on the initial centroids.</p>
 <p>The ROC AUC score is sensitive to which label is considered positive (1) and which is negative (0). If the labels are flipped, the ROC AUC score will reflect that flip, potentially resulting in a low score even if the clustering is otherwise correct.</p>
-<p>These are the reasons we performed the flip, since the cluster are okey.</p>
 <div id="cell-13" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">10</span>)</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
