@@ -25,5 +25,7 @@ currency overlay solutions and developing advanced trading models. I have also
 worked utilizing quantum-inspired algorithms to solve well-known financial
 problems like Index Tracking and arbitrage strategies.
 
+I am currently working as a Senior Data Scientist at Verisure.
+
 In this blog I share some thoughts and ideas that I think are interesting.
 
